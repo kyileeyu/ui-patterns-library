@@ -21,37 +21,151 @@ FE 개발자가 실무에서 접하는 모든 UX 패턴을 Native HTML 기반으
 
 ## 🎨 구현할 UI 패턴 목록
 
-### Phase 1: 기본 패턴 (우선순위 높음)
-- [ ] **Modal** - Promise 기반 Hook API
-- [ ] **Drawer** - 슬라이드 패널
+> 총 **47개 패턴** (Material Design 3 + W3C ARIA APG 기준)
+
+---
+
+### 🔥 Priority Group 1: 핵심 오버레이 & 다이얼로그 (가장 높은 우선순위)
+**멘토님 강조: 모달을 중심으로 한 오버레이 패턴부터**
+
+- [ ] **Modal/Dialog** - Promise 기반 Hook API, 포커스 트랩, ESC 닫기
+- [ ] **Alert Dialog** - 확인/취소 전용 모달 (confirm/alert 대체)
+- [ ] **Drawer/Sheet** - 측면/하단 슬라이드 패널
+- [ ] **Bottom Sheet** - 모바일 하단 시트
+- [ ] **Popover** - 비모달 팝업 (위치 기반)
+- [ ] **Tooltip** - 호버/포커스 정보 표시
+
+**왜 우선순위 1등?**
+- 가장 복잡한 패턴 (포커스 관리, z-index, 접근성)
+- 다른 패턴의 기반이 됨 (Menu, Select도 내부적으로 Popover 사용)
+- Promise 기반 API의 핵심 유스케이스
+
+---
+
+### ⚡ Priority Group 2: 폼 입력 & 선택 (기본 인터랙션)
+**실무에서 가장 많이 사용**
+
+#### 2-1. 선택 컨트롤
+- [ ] **Radio Button/Group** - 단일 선택 (접근성 중요)
+- [ ] **Checkbox** - 다중 선택, indeterminate 상태
+- [ ] **Switch/Toggle** - on/off 토글
+
+#### 2-2. 드롭다운 계열
+- [ ] **Select/Dropdown** - 네이티브 select 대체
+- [ ] **Combobox** - 검색 가능한 드롭다운
+- [ ] **Autocomplete** - 자동완성 입력
+- [ ] **Menu/Context Menu** - 액션 메뉴
+
+#### 2-3. 입력 필드
+- [ ] **Text Field/Input** - 텍스트 입력
+- [ ] **Textarea** - 멀티라인 입력
+- [ ] **Date & Time Picker** - 날짜/시간 선택
+- [ ] **Spinbutton** - 숫자 증감 입력
+- [ ] **Slider** - 범위 값 선택
+- [ ] **Multi-thumb Slider** - 범위 슬라이더
+
+**왜 우선순위 2등?**
+- 모든 프로젝트에서 필수
+- 접근성 구현 연습에 최적
+- 비교적 독립적 (다른 패턴 의존도 낮음)
+
+---
+
+### 📢 Priority Group 3: 피드백 & 알림
+**사용자에게 상태를 전달**
+
+- [ ] **Toast/Snackbar** - 일시적 알림 (자동 사라짐)
+- [ ] **Alert/Notification** - 중요 알림 (배너형)
+- [ ] **Badge** - 숫자/상태 뱃지
+- [ ] **Progress Bar** - 진행률 표시
+- [ ] **Circular Progress/Spinner** - 로딩 인디케이터
+- [ ] **Skeleton** - 로딩 플레이스홀더
+- [ ] **Meter** - 수치 시각화 (배터리, 용량 등)
+
+**왜 우선순위 3등?**
+- UX에 필수적
+- 구현 난이도 중간
+- 접근성 고려 필요 (live region, aria-busy)
+
+---
+
+### 🧭 Priority Group 4: 네비게이션 & 레이아웃
+**정보 구조와 이동**
+
+#### 4-1. 콘텐츠 구조
+- [ ] **Tabs** - 탭 전환 (키보드 네비게이션 중요)
 - [ ] **Accordion** - 접히는 콘텐츠
-- [ ] **Radio Button** - 단일 선택
-- [ ] **Checkbox** - 다중 선택
-- [ ] **Select/Dropdown** - 선택 드롭다운
+- [ ] **Disclosure** - 단순 show/hide
 
-### Phase 2: 피드백 패턴
-- [ ] **Toast/Snackbar** - 일시적 알림
-- [ ] **Tooltip** - 호버 정보
-- [ ] **Popover** - 팝업 콘텐츠
-- [ ] **Alert/Notification** - 중요 알림
-
-### Phase 3: 네비게이션 패턴
-- [ ] **Tabs** - 탭 전환
+#### 4-2. 네비게이션
 - [ ] **Breadcrumb** - 경로 표시
 - [ ] **Pagination** - 페이지 네비게이션
-- [ ] **Menu** - 메뉴 시스템
+- [ ] **App Bar (Top/Bottom)** - 상단/하단 네비게이션 바
+- [ ] **Navigation Drawer** - 사이드 메뉴
+- [ ] **Navigation Rail** - 축소형 사이드 네비게이션
+- [ ] **Toolbar** - 툴바 컨트롤 그룹
+- [ ] **Menu Button** - 버튼 + 메뉴 조합
 
-### Phase 4: 입력 패턴
-- [ ] **Input** - 텍스트 입력
-- [ ] **TextArea** - 멀티라인 입력
-- [ ] **DatePicker** - 날짜 선택
-- [ ] **File Upload** - 파일 업로드
+#### 4-3. 레이아웃
+- [ ] **Divider** - 구분선
+- [ ] **Window Splitter** - 리사이즈 가능 패널
+- [ ] **Card** - 콘텐츠 컨테이너
 
-### Phase 5: 고급 패턴
-- [ ] **Table** - 데이터 테이블
-- [ ] **Carousel** - 슬라이드 쇼
-- [ ] **Infinite Scroll** - 무한 스크롤
+---
+
+### 🚀 Priority Group 5: 복잡한 데이터 표시
+**고급 인터랙션**
+
+- [ ] **List** - 단순/복잡한 목록
+- [ ] **Table** - 정적 데이터 테이블
+- [ ] **Grid (Interactive)** - 키보드 네비게이션 그리드
+- [ ] **Treegrid** - 계층 구조 편집 가능 그리드
+- [ ] **Tree View** - 계층 구조 목록 (파일 탐색기)
+- [ ] **Feed** - 무한 스크롤 피드
+- [ ] **Infinite Scroll** - 무한 스크롤 구현
+- [ ] **Carousel** - 이미지/콘텐츠 슬라이더
+- [ ] **Virtualized List** - 대용량 목록 최적화
+
+---
+
+### 🎯 Priority Group 6: 고급 인터랙션
+**선택적 구현 (시간 여유 시)**
+
 - [ ] **Drag & Drop** - 드래그 앤 드롭
+- [ ] **Sortable List** - 정렬 가능한 목록
+- [ ] **Resizable** - 크기 조절 가능
+- [ ] **File Upload** - 파일 업로드 (드래그 드롭 포함)
+- [ ] **Search** - 검색 입력 (자동완성 포함)
+- [ ] **Chips** - 태그/필터 선택
+- [ ] **Color Picker** - 색상 선택
+- [ ] **Rich Text Editor** - 텍스트 편집기
+
+---
+
+### 🔧 Priority Group 7: 기본 빌딩 블록
+**다른 패턴의 기초가 되는 것들**
+
+- [ ] **Button** - 기본/아이콘/FAB 버튼
+- [ ] **Link** - 접근성 있는 링크
+- [ ] **Icon Button** - 아이콘 버튼
+- [ ] **Floating Action Button (FAB)** - 플로팅 액션 버튼
+- [ ] **Landmarks** - 시맨틱 섹션 구조
+
+---
+
+### 📊 우선순위 요약
+
+| Group | 패턴 수 | 구현 순서 | 예상 기간 |
+|-------|---------|-----------|-----------|
+| **Group 1** | 6개 | 1~2주차 | 가장 중요 |
+| **Group 2** | 12개 | 3~6주차 | 필수 |
+| **Group 3** | 7개 | 7~8주차 | 필수 |
+| **Group 4** | 11개 | 9~11주차 | 권장 |
+| **Group 5** | 9개 | 12~14주차 | 선택 |
+| **Group 6** | 8개 | 15주차~ | 선택 |
+| **Group 7** | 5개 | 병행 구현 | 기초 |
+
+**✅ 멘토링 목표 달성을 위한 최소 범위: Group 1~3 (25개 패턴)**
 
 ---
 
@@ -123,20 +237,33 @@ ui-patterns-library/
 - 높은 응집도 (High Cohesion)
 - 명확한 인터페이스
 
-### 3. 쉽게 사용 가능한 API
-```typescript
-// 나쁜 예: JSX 선언적 사용
-<Modal open={isOpen} onClose={...}>...</Modal>
+### 3. 다양한 API 패턴 실험
+각 컴포넌트마다 여러 사용 방식을 구현하고 비교:
 
-// 좋은 예: Promise 기반 명령적 사용
+```typescript
+// 패턴 1: 선언적 (Declarative) API
+<Modal open={isOpen} onClose={handleClose}>
+  <p>정말 삭제하시겠습니까?</p>
+</Modal>
+
+// 패턴 2: 명령적 Promise 기반 API
 const result = await modal({
   title: '확인',
   content: '정말 삭제하시겠습니까?',
 });
-if (result) {
-  // 확인 처리
-}
+
+// 패턴 3: Hook 기반 API
+const { open, close } = useModal();
+open({ content: '...' });
+
+// 패턴 4: Headless 컴포넌트
+<Modal.Root>
+  <Modal.Trigger />
+  <Modal.Content />
+</Modal.Root>
 ```
+
+**각 패턴의 트레이드오프를 분석하고 문서화**
 
 ### 4. 의사결정 기록
 모든 중요한 결정은 Google Sheets에 기록:
