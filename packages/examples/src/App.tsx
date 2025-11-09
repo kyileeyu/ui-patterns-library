@@ -1,39 +1,110 @@
-import { version as coreVersion } from '@ui-patterns/core'
-import { version as reactVersion } from '@ui-patterns/react'
+import { useState } from "react";
+import { Modal, useModal, modal } from "@ui-patterns/react";
+import "./App.css";
 
 function App() {
+  // 1. Declarative API
+  const [isDeclarativeOpen, setIsDeclarativeOpen] = useState(false);
+
+  // 2. Hook API
+  const hookModal = useModal();
+
+  // 3. Promise API handlers
+  const handleConfirm = async () => {
+    const result = await modal.confirm({
+      title: "Delete Item",
+      message:
+        "Are you sure you want to delete this item? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+    });
+
+    if (result.confirmed) {
+      await modal.alert("Item deleted successfully!");
+    }
+  };
+
   return (
-    <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1>UI Patterns Library</h1>
-      <p>프레임워크 무관 UI 패턴 구현 & React Wrapper</p>
+    <div className="app">
+      <h1>UI Patterns - Modal Examples</h1>
 
-      <div style={{ marginTop: '2rem', padding: '1rem', background: '#f5f5f5', borderRadius: '8px' }}>
-        <h2>패키지 버전</h2>
-        <ul>
-          <li>@ui-patterns/core: {coreVersion}</li>
-          <li>@ui-patterns/react: {reactVersion}</li>
-        </ul>
-      </div>
+      <div className="examples">
+        <section>
+          <h2>1. Declarative API</h2>
+          <button onClick={() => setIsDeclarativeOpen(true)}>
+            Open Declarative Modal
+          </button>
 
-      <div style={{ marginTop: '2rem' }}>
-        <h2>구현 예정 패턴</h2>
-        <p>Priority Group 1부터 순차적으로 구현됩니다:</p>
-        <ol>
-          <li>Modal/Dialog</li>
-          <li>Alert Dialog</li>
-          <li>Drawer/Sheet</li>
-          <li>Bottom Sheet</li>
-          <li>Popover</li>
-          <li>Tooltip</li>
-        </ol>
-      </div>
+          <Modal
+            isOpen={isDeclarativeOpen}
+            onClose={() => setIsDeclarativeOpen(false)}
+            ariaLabel="Declarative Modal Example">
+            <div className="modal-content">
+              <h2>Declarative Modal</h2>
+              <p>This modal uses the declarative API with isOpen prop.</p>
+              <button onClick={() => setIsDeclarativeOpen(false)}>Close</button>
+            </div>
+          </Modal>
+        </section>
 
-      <div style={{ marginTop: '2rem', padding: '1rem', background: '#e3f2fd', borderRadius: '8px' }}>
-        <p><strong>✅ Monorepo 설정 완료!</strong></p>
-        <p>다음 단계: 첫 번째 패턴(Modal) 구현</p>
+        <section>
+          <h2>2. Hook-based API</h2>
+          <button onClick={hookModal.open}>Open Hook Modal</button>
+
+          <Modal
+            isOpen={hookModal.isOpen}
+            onClose={hookModal.close}
+            ariaLabel="Hook Modal Example">
+            <div className="modal-content">
+              <h2>Hook Modal</h2>
+              <p>This modal uses the useModal hook.</p>
+              <div className="modal-actions">
+                <button onClick={hookModal.close}>Close</button>
+                <button onClick={hookModal.toggle}>Toggle</button>
+              </div>
+            </div>
+          </Modal>
+        </section>
+
+        <section>
+          <h2>3. Promise-based API</h2>
+          <button onClick={handleConfirm}>Open Confirm Dialog</button>
+        </section>
+
+        <section>
+          <h2>4. Custom Styled Modal</h2>
+          <button onClick={() => setIsDeclarativeOpen(true)}>
+            Open Styled Modal
+          </button>
+
+          <Modal
+            isOpen={isDeclarativeOpen}
+            onClose={() => setIsDeclarativeOpen(false)}
+            backdropClassName="custom-backdrop"
+            containerClassName="custom-container"
+            contentClassName="custom-content"
+            closeOnBackdropClick={true}
+            closeOnEscape={true}>
+            <div className="modal-content custom">
+              <h2>Custom Styled Modal</h2>
+              <p>This modal has custom CSS classes applied.</p>
+              <ul>
+                <li>Click backdrop to close</li>
+                <li>Press ESC to close</li>
+                <li>Tab navigation is trapped inside</li>
+                <li>Body scroll is locked</li>
+              </ul>
+              <div className="modal-actions">
+                <button onClick={() => setIsDeclarativeOpen(false)}>
+                  Close
+                </button>
+              </div>
+            </div>
+          </Modal>
+        </section>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
