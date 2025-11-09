@@ -26,6 +26,6 @@
       "@ui-patterns/react": ["./packages/react/src"]
     }
   },
-  "include": ["packages/*/src"],
+  "include": ["packages/*/src", "packages/patterns"],
   "exclude": ["node_modules", "dist", "build"]
 }
