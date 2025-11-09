@@ -10,7 +10,9 @@ export const version = '0.0.0'
 // Re-export core utilities
 export { version as coreVersion } from '@ui-patterns/core'
 
-// React wrappers will be exported here as we implement them
-// export * from './modal'
+// React wrappers
+export * from './modal'
+
+// Future patterns
 // export * from './drawer'
 // export * from './accordion'

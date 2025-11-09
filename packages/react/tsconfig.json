@@ -4,8 +4,12 @@
     "jsx": "react-jsx",
     "outDir": "./dist",
     "declaration": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@patterns/*": ["../patterns/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "../patterns/**/*.tsx", "../patterns/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
