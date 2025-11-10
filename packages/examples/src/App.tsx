@@ -1,5 +1,6 @@
 import { Modal } from "@ui-patterns/core";
 import { useEffect, useRef } from "react";
+import "./App.css";
 
 function App() {
   const modalRef = useRef<Modal | null>(null);
