@@ -2,15 +2,10 @@
  * @ui-patterns/react
  *
  * React wrappers for @ui-patterns/core
- * Provides multiple API patterns: Declarative, Hook-based, Promise-based, Headless
+ * Re-exports all React patterns from @ui-patterns/patterns
  */
 
-export const version = '0.0.0'
-
-// Re-export core utilities
-export { version as coreVersion } from '@ui-patterns/core'
-
-// React wrappers will be exported here as we implement them
-// export * from './modal'
-// export * from './drawer'
-// export * from './accordion'
+// Re-export all React patterns
+export * from '../../patterns/modal/react'
+// export * from '../../patterns/drawer/react'
+// export * from '../../patterns/accordion/react'
