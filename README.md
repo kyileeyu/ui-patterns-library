@@ -73,21 +73,28 @@ open({ content: '...' });
 
 ```
 ui-patterns-library/
-├── docs/                    # 문서
-│   ├── PROJECT_PLAN.md     # 상세 프로젝트 계획
-│   └── patterns/           # 각 패턴별 문서
-├── src/
-│   ├── core/               # 핵심 유틸리티
-│   │   ├── dom/           # DOM 조작 헬퍼
-│   │   ├── hooks/         # React Hook 유틸
-│   │   └── a11y/          # 접근성 유틸
-│   ├── patterns/          # UI 패턴 구현
+├── docs/                        # 문서
+│   ├── PROJECT_PLAN.md         # 상세 프로젝트 계획
+│   ├── ITERATION_PLAN.md       # 이터레이션 계획
+│   └── TECH_DECISIONS.md       # 기술 의사결정 기록
+├── packages/                    # Monorepo 패키지들
+│   ├── core/                   # 순수 TypeScript Core
+│   │   ├── src/
+│   │   └── package.json
+│   ├── react/                  # React Wrapper
+│   │   ├── src/
+│   │   └── package.json
+│   ├── patterns/               # 패턴별 구현
 │   │   ├── modal/
+│   │   │   ├── core/          # Vanilla TS 구현
+│   │   │   └── README.md
 │   │   ├── drawer/
 │   │   └── ...
-│   └── index.ts
-├── examples/              # 사용 예제
-└── tests/                 # 테스트
+│   └── examples/               # 사용 예제 & 데모
+│       ├── src/
+│       └── package.json
+├── pnpm-workspace.yaml         # Monorepo 설정
+└── package.json
 ```
 
 ## 🔗 참고 자료
@@ -96,12 +103,66 @@ ui-patterns-library/
 - [W3C ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/)
 - [의사결정 기록 (Google Sheets)](https://docs.google.com/spreadsheets/d/1846Bi51wSw-erTTENO0gDQgOnTIw6jfN3QSYUj_NVLc/edit?gid=0#gid=0)
 
-## 🚀 개발 로드맵
+## 🚀 21일 완성 계획 (11/10 ~ 11/30)
 
-1. **1~2주차**: Group 1 - Modal 중심 오버레이 패턴
-2. **3~6주차**: Group 2 - 폼 컨트롤 & 선택 패턴
-3. **7~8주차**: Group 3 - 피드백 & 알림 패턴
-4. **9주차~**: Group 4+ - 네비게이션 & 고급 패턴
+**목표: 20개 핵심 패턴 직접 구현하며 학습하기**
+
+### 📅 Week 1 (11/10 ~ 11/16): Dialog 기반 패턴 - 7개
+Modal 기반으로 확장 가능한 오버레이 패턴 집중 학습
+
+- [ ] **11/10 (월)** - Modal Core (ScrollLock, FocusTrap, A11y)
+- [ ] **11/11 (화)** - Modal React wrapper + Promise API
+- [ ] **11/12 (수)** - Alert Dialog (Modal 확장 + role 변경)
+- [ ] **11/13 (목)** - Drawer (4방향 슬라이드 + 애니메이션)
+- [ ] **11/14 (금)** - Bottom Sheet (모바일 제스처 + snap points)
+- [ ] **11/15 (토)** - Popover (Positioning 엔진, 독립 구현)
+- [ ] **11/16 (일)** - Tooltip + Week 1 회고
+
+### 📅 Week 2 (11/17 ~ 11/23): 폼 & 선택 컨트롤 - 7개
+실무에서 가장 많이 사용하는 입력 컴포넌트
+
+- [ ] **11/17 (월)** - Radio/Checkbox (접근성 중심)
+- [ ] **11/18 (화)** - Switch (애니메이션 + 상태 관리)
+- [ ] **11/19 (수)** - Select (Popover 기반 드롭다운)
+- [ ] **11/20 (목)** - Combobox (검색 + 필터링)
+- [ ] **11/21 (금)** - Autocomplete (Debounce + 비동기)
+- [ ] **11/22 (토)** - Menu (Context Menu 포함)
+- [ ] **11/23 (일)** - TextField + Week 2 회고
+
+### 📅 Week 3 (11/24 ~ 11/30): 피드백 & 네비게이션 - 6개
+사용자 피드백과 콘텐츠 구조
+
+- [ ] **11/24 (월)** - Toast (큐 관리 + 자동 사라짐)
+- [ ] **11/25 (화)** - Alert/Banner (Dismissible + 위치)
+- [ ] **11/26 (수)** - Progress/Spinner (진행률 + 로딩 상태)
+- [ ] **11/27 (목)** - Tabs (키보드 네비게이션)
+- [ ] **11/28 (금)** - Accordion (애니메이션 + 다중 확장)
+- [ ] **11/29 (토)** - Breadcrumb
+- [ ] **11/30 (일)** - 🎯 전체 마무리 & 문서화
+
+### 📊 진행률 트래킹
+
+```
+Week 1: ▱▱▱▱▱▱▱ (0/7) - Dialog 기반
+Week 2: ▱▱▱▱▱▱▱ (0/7) - 폼 & 선택
+Week 3: ▱▱▱▱▱▱ (0/6) - 피드백 & 네비게이션
+━━━━━━━━━━━━━━━━━━━━━━
+Total: 0/20 (0%)
+```
+
+### ⚡ 효율성 전략
+
+**코드 재사용 극대화**
+```
+Modal (기본) → Alert Dialog, Drawer, Bottom Sheet
+Popover (positioning) → Select, Combobox, Menu
+```
+
+
+**품질 기준**
+- ✅ 필수: 접근성, 키보드 네비게이션, 기본 스타일
+- ⚠️ 선택: E2E 테스트, 복잡한 애니메이션
+- 🎯 완성도: 80% 목표 (완벽주의 피하기)
 
 ## 📝 의사결정 기록
 
