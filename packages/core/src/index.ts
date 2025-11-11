@@ -2,12 +2,10 @@
  * @ui-patterns/core
  *
  * Framework-agnostic UI patterns implementation
- * Built with vanilla TypeScript and Web Standards
+ * Re-exports all core patterns from @ui-patterns/patterns
  */
 
-export const version = '0.0.0'
-
-// Patterns will be exported here as we implement them
-// export * from './modal'
-// export * from './drawer'
-// export * from './accordion'
+// Re-export all core patterns
+export * from '../../patterns/modal/core'
+// export * from '../../patterns/drawer/core'
+// export * from '../../patterns/accordion/core'

@@ -121,48 +121,82 @@ node_modules/            # 심볼릭 링크로 연결
 
 ---
 
-## 🏗️ 4. 아키텍처: 하이브리드 (Core + React)
+## 🏗️ 4. 아키텍처: Re-export 레이어 패턴
 
 ### 결정
-**바닐라 Core + React Wrapper 분리**
+**patterns 디렉토리에서 개발 + core/react는 re-export 레이어**
 
 ```
 packages/
-  ├── core/              # 순수 TypeScript/DOM 구현
-  ├── react/             # React wrapper
-  └── examples/          # 데모 앱 (Vite + React)
+  ├── patterns/          # 🎯 실제 개발 영역
+  │   └── modal/
+  │       ├── core/      # 바닐라 JS/TS 구현
+  │       └── react/     # React 래퍼
+  ├── core/              # Re-export 레이어
+  ├── react/             # Re-export 레이어
+  └── examples/          # 데모 앱
 ```
 
 ### 이유
-1. **본질의 이해**
-   - Core에서 순수 DOM/JS로 구현 → 프레임워크 무관한 본질 이해
-   - React는 단지 "래퍼"라는 것을 체감
+1. **개발 편의성**
+   - 모든 UI 패턴을 `patterns/` 하나의 디렉토리에서 개발
+   - 패턴별로 core/react가 함께 있어 관련 코드 파악 용이
+   - 예: `patterns/modal/` 안에 core와 react 구현이 모두 존재
 
-2. **확장성**
-   - 나중에 Vue, Svelte, Solid 등 다른 프레임워크 wrapper 추가 가능
-   - Core는 변경 없이 재사용
+2. **사용자 편의성**
+   - 사용자는 `@ui-patterns/core`, `@ui-patterns/react`로 통합된 import
+   - 패턴이 많아져도 import 경로는 단순하게 유지
+   - 예: `import { Modal, Drawer } from '@ui-patterns/react'`
 
-3. **여러 API 패턴 실험**
-   - Core: 명령적 API (`createModal()`)
-   - React: 선언적, Hook, Promise, Headless 등 다양한 패턴 실험
+3. **의존성 분리**
+   - core만 필요한 사용자는 React 의존성 다운로드 불필요
+   - `@ui-patterns/react`는 `@ui-patterns/modal`만 의존
+   - `@ui-patterns/core`도 불필요 (각 패턴이 독립적)
 
-4. **번들 사이즈**
-   - 바닐라만 쓰는 사용자는 `@ui-patterns/core`만 설치
-   - React 사용자만 React 의존성 포함
+4. **확장성**
+   - 새 패턴 추가 시 `patterns/새패턴/` 디렉토리만 생성
+   - core/react의 index.ts에 re-export만 추가
+   - 의존성 관계가 명확하고 단순
 
 ### 다른 선택지
-1. **React Only**
-   - 장점: 구현 빠름, 설정 간단
-   - 단점: 본질 이해 부족, Vue 등 지원 어려움
+1. **패턴별 독립 패키지** (`@ui-patterns/modal-core`, `@ui-patterns/modal-react`)
+   - 장점: 완전한 독립성, 개별 버전 관리
+   - 단점: import 복잡 (`@ui-patterns/modal-react`), 패키지 관리 부담
 
-2. **Vanilla Only**
-   - 장점: 순수 JS만으로 모든 것 해결
-   - 단점: React 사용자가 직접 래퍼 작성 필요
+2. **모든 코드를 core/react에 직접 구현**
+   - 장점: 구조 단순
+   - 단점: 패턴이 많아지면 core/react 디렉토리가 비대해짐, 패턴별 코드 찾기 어려움
+
+3. **patterns 없이 core/react 내부에 패턴별 폴더**
+   - 장점: 패키지 수가 적음
+   - 단점: workspace 의존성 관리의 이점 활용 못함
 
 ### 트레이드오프
-- ✅ 장점: 본질 이해, 확장성, 다양한 API 실험, 선택적 의존성
-- ❌ 단점: 구현 시간 2배 (Core + React 둘 다), 패키지 관리 복잡
-- 💡 우리 선택: 학습 목표와 확장성을 위해 시간 투자
+- ✅ 장점: 개발 편의성, 사용자 편의성, 의존성 분리, 확장 용이
+- ❌ 단점: 패키지 수 증가 (패턴당 1개), workspace 설정 필요
+- 💡 우리 선택: 장기적 유지보수성과 확장성을 위해 선택
+
+### 구현 예시
+
+**패턴 추가 흐름:**
+```bash
+# 1. 새 패턴 디렉토리 생성
+mkdir -p packages/patterns/drawer/{core,react}
+
+# 2. 구현 작성
+# packages/patterns/drawer/core/index.ts
+# packages/patterns/drawer/react/index.ts
+
+# 3. Re-export 추가
+# packages/core/src/index.ts
+export * from '../../patterns/drawer/core'
+
+# packages/react/src/index.ts
+export * from '../../patterns/drawer/react'
+
+# 4. 사용
+import { Drawer } from '@ui-patterns/react'
+```
 
 ---
 
@@ -173,7 +207,7 @@ packages/
 | **프로젝트 구조** | Monorepo | 코드 공유, 일관된 버전 관리 | 초기 설정 복잡 |
 | **빌드 도구** | Vite | 빠른 개발, 간단한 설정, 경험 | 세밀한 번들 제어 제한 |
 | **패키지 매니저** | pnpm | 빠름, 디스크 효율, 안전성 | 일부 도구 호환성(드뭄) |
-| **아키텍처** | Core+React | 본질 이해, 확장성, API 실험 | 구현 시간 2배 |
+| **아키텍처** | Re-export 레이어 | 개발/사용 편의성, 의존성 분리 | 패키지 수 증가 |
 
 ---
 
@@ -181,14 +215,16 @@ packages/
 
 이 기술 스택 선택은 다음 목표를 지향합니다:
 
-1. **본질의 이해**: Core를 통해 프레임워크 무관한 원리 학습
-2. **확장성**: 미래에 다른 프레임워크 지원 가능
-3. **실험**: 다양한 API 패턴을 자유롭게 시도
-4. **현대적 개발 경험**: 빠르고 효율적인 개발 환경
+1. **개발 편의성**: patterns 디렉토리에서 패턴별로 집중 개발
+2. **사용자 편의성**: 단순한 import 경로 (`@ui-patterns/core`, `@ui-patterns/react`)
+3. **의존성 분리**: 필요한 것만 설치 (core만 또는 react까지)
+4. **확장성**: 패턴 추가가 쉽고 명확한 구조
+5. **현대적 개발 경험**: 빠르고 효율적인 개발 환경
 
-초기 설정의 복잡도는 높지만, 장기적인 학습 가치와 프로젝트 확장성을 위해 선택했습니다.
+초기 설정의 복잡도는 높지만, 장기적인 유지보수성과 확장성을 위해 선택했습니다.
 
 ---
 
 **작성일**: 2025-11-07
+**최종 업데이트**: 2025-11-10 (Re-export 레이어 패턴 적용)
 **다음 업데이트**: 첫 패턴(Modal) 구현 후, 실제 사용 경험 기록 예정

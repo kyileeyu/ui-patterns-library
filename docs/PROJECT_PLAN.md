@@ -171,62 +171,11 @@ FE 개발자가 실무에서 접하는 모든 UX 패턴을 Native HTML 기반으
 
 ## 🏗️ 아키텍처 설계
 
-### 프로젝트 구조 (예상)
-
-```
-ui-patterns-library/
-├── docs/                        # 문서
-│   ├── PROJECT_PLAN.md         # 이 파일
-│   ├── ARCHITECTURE.md         # 아키텍처 설계
-│   ├── DECISION_LOG.md         # 의사결정 로그 (Google Sheets 요약)
-│   └── patterns/               # 각 패턴별 문서
-├── src/
-│   ├── core/                   # 핵심 유틸리티
-│   │   ├── dom/               # DOM 조작 헬퍼
-│   │   ├── hooks/             # React Hook 유틸
-│   │   └── a11y/              # 접근성 유틸
-│   ├── patterns/              # UI 패턴 구현
-│   │   ├── modal/
-│   │   ├── drawer/
-│   │   ├── accordion/
-│   │   └── ...
-│   └── index.ts               # 진입점
-├── examples/                   # 사용 예제
-├── tests/                      # 테스트
-└── package.json
-```
-
 ### 코드 제약사항
 
 - **UI 컴포넌트**: 1000줄까지 허용
 - **유틸리티/로직**: 300-500줄로 분할
 - **PR 단위**: 하나의 기능 또는 패턴
-
----
-
-## 🔄 개발 프로세스 (이터레이션)
-
-### Iteration 0: 프로젝트 초기 설정 ✅
-- [x] Git 초기화
-- [x] Monorepo 구조 설계 (pnpm workspace)
-- [x] 기본 설정 (TypeScript, Vite, Build)
-- [x] 3개 패키지 생성 (core, react, examples)
-- [x] 개발 서버 테스트 완료
-- [x] 5개 커밋으로 분할 완료
-
-**브랜치**: `iteration-0/project-setup`
-**완료일**: 2025-11-07
-
-### Iteration 1: Modal 구현 (첫 번째 패턴)
-1. 핵심 Modal 로직 구현
-2. Promise 기반 Hook API 설계
-3. 접근성 기능 추가
-4. 예제 작성
-5. 테스트 작성
-
-### Iteration 3+: 다른 패턴 순차 구현
-- 각 패턴마다 동일한 프로세스 반복
-- 학습한 내용을 다음 패턴에 적용
 
 ---
 

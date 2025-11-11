@@ -19,6 +19,9 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@ui-patterns/modal": "workspace:*"
+  },
   "keywords": [
     "ui",
     "patterns",
