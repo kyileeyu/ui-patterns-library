@@ -244,54 +244,64 @@ pnpm --filter @ui-patterns/core typecheck
 - [W3C ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/patterns/)
 - [의사결정 기록 (Google Sheets)](https://docs.google.com/spreadsheets/d/1846Bi51wSw-erTTENO0gDQgOnTIw6jfN3QSYUj_NVLc/edit?gid=0#gid=0)
 
-## 🚀 21일 완성 계획 (11/10 ~ 11/30)
+## 🚀 21일 완성 계획 (11/10 ~ 11/30) - 🔄 수정됨 (11/25)
 
-**목표: 20개 핵심 패턴 직접 구현하며 학습하기**
+**목표: 43개 패턴 구현 (쉬운 것부터 → 어려운 것 순서)**
 
-### 📅 Week 1 (11/10 ~ 11/16): Dialog 기반 패턴 - 7개
+> **전략 변경**: Modal이 예상보다 복잡하여 난이도 순으로 재배치
+> 빠른 성취감 → 자신감 회복 → 어려운 패턴 도전
 
-Modal 기반으로 확장 가능한 오버레이 패턴 집중 학습
+### 📅 Week 1 (11/25 ~ 12/01): 초급 패턴 쓸어담기 - 20개
 
-- [ ] **11/10 (월)** - Modal Core (ScrollLock, FocusTrap, A11y)
-- [ ] **11/11 (화)** - Modal React wrapper + Promise API
-- [ ] **11/12 (수)** - Alert Dialog (Modal 확장 + role 변경)
-- [ ] **11/13 (목)** - Drawer (4방향 슬라이드 + 애니메이션)
-- [ ] **11/14 (금)** - Bottom Sheet (모바일 제스처 + snap points)
-- [ ] **11/15 (토)** - Popover (Positioning 엔진, 독립 구현)
-- [ ] **11/16 (일)** - Tooltip + Week 1 회고
+**🟢 Level 1~2: 빠른 성취감으로 모멘텀 확보**
 
-### 📅 Week 2 (11/17 ~ 11/23): 폼 & 선택 컨트롤 - 7개
+- [ ] **11/25 (월)** - Badge, Button, Icon Button, Link, Divider (5개) - 2시간
+- [ ] **11/26 (화)** - Switch, Checkbox, Radio Button (3개) - 3시간
+- [ ] **11/27 (수)** - Meter, Skeleton, Spinner, Card (4개) - 2시간
+- [ ] **11/28 (목)** - Progress Bar, Alert, Breadcrumb (3개) - 3시간
+- [ ] **11/29 (금)** - Text Field, Textarea, FAB (3개) - 3시간
+- [ ] **11/30 (토)** - Toolbar, Disclosure (2개) - 2시간
+- [ ] **12/01 (일)** - 🎯 Week 1 회고 + 문서 정리
 
-실무에서 가장 많이 사용하는 입력 컴포넌트
+### 📅 Week 2 (12/02 ~ 12/08): 중급 패턴 도전 - 11개
 
-- [ ] **11/17 (월)** - Radio/Checkbox (접근성 중심)
-- [ ] **11/18 (화)** - Switch (애니메이션 + 상태 관리)
-- [ ] **11/19 (수)** - Select (Popover 기반 드롭다운)
-- [ ] **11/20 (목)** - Combobox (검색 + 필터링)
-- [ ] **11/21 (금)** - Autocomplete (Debounce + 비동기)
-- [ ] **11/22 (토)** - Menu (Context Menu 포함)
-- [ ] **11/23 (일)** - TextField + Week 2 회고
+**🟠 Level 3: 상태 관리 + 키보드 네비게이션**
 
-### 📅 Week 3 (11/24 ~ 11/30): 피드백 & 네비게이션 - 6개
+- [ ] **12/02 (월)** - Tabs, Accordion (2개) - 키보드 네비게이션
+- [ ] **12/03 (화)** - Slider, Spinbutton (2개) - 드래그 + 입력
+- [ ] **12/04 (수)** - Toast/Snackbar (1개) - 큐 관리 + 자동 사라짐
+- [ ] **12/05 (목)** - List, Pagination (2개) - 선택 상태 관리
+- [ ] **12/06 (금)** - Chips, Search (2개) - 추가/삭제
+- [ ] **12/07 (토)** - Carousel, Feed (2개) - 슬라이드 + 무한스크롤
+- [ ] **12/08 (일)** - 🎯 Week 2 회고 + 문서 정리
 
-사용자 피드백과 콘텐츠 구조
+### 📅 Week 3 (12/09 ~ 12/15): 고급 패턴 + 최종 보스 - 12개
 
-- [ ] **11/24 (월)** - Toast (큐 관리 + 자동 사라짐)
-- [ ] **11/25 (화)** - Alert/Banner (Dismissible + 위치)
-- [ ] **11/26 (수)** - Progress/Spinner (진행률 + 로딩 상태)
-- [ ] **11/27 (목)** - Tabs (키보드 네비게이션)
-- [ ] **11/28 (금)** - Accordion (애니메이션 + 다중 확장)
-- [ ] **11/29 (토)** - Breadcrumb
-- [ ] **11/30 (일)** - 🎯 전체 마무리 & 문서화
+**🔴 Level 4~5: Positioning + 복잡한 로직 + Modal**
+
+#### Phase 1: Positioning 마스터 (12/09~12/11)
+- [ ] **12/09 (월)** - Tooltip (1개) - Positioning 기본
+- [ ] **12/10 (화)** - Popover (1개) - Positioning 엔진 완성
+- [ ] **12/11 (수)** - Menu, Context Menu (2개) - Popover 활용
+
+#### Phase 2: Modal 계열 완성 (12/12~12/14)
+- [ ] **12/12 (목)** - Modal v2 완성 (Portal, ScrollLock, ESC) - 기존 v1 업그레이드
+- [ ] **12/13 (금)** - Alert Dialog, Drawer (2개) - Modal 확장
+- [ ] **12/14 (토)** - Bottom Sheet, Navigation Drawer (2개)
+
+#### Phase 3: 복잡한 Select 계열 (12/15)
+- [ ] **12/15 (일)** - Select, Combobox, Autocomplete (3개) + 🎯 전체 마무리
 
 ### 📊 진행률 트래킹
 
 ```
-Week 1: ▱▱▱▱▱▱▱ (0/7) - Dialog 기반
-Week 2: ▱▱▱▱▱▱▱ (0/7) - 폼 & 선택
-Week 3: ▱▱▱▱▱▱ (0/6) - 피드백 & 네비게이션
-━━━━━━━━━━━━━━━━━━━━━━
-Total: 0/20 (0%)
+Week 1: ▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱▱ (0/20) - 초급 쓸어담기 🟢
+Week 2: ▱▱▱▱▱▱▱▱▱▱▱ (0/11) - 중급 도전 🟠
+Week 3: ▱▱▱▱▱▱▱▱▱▱▱▱ (0/12) - 고급 + 보스 🔴
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total: 0/43 (0%)
+
+현재 완료: Modal v1 (4가지 API 골격) ⚠️ v2 업그레이드 대기 중
 ```
 
 ### ⚡ 효율성 전략
