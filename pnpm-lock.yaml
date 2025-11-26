@@ -55,6 +55,15 @@ importers:
         specifier: ^4.2.1
         version: 4.7.0(vite@5.4.21)
 
+  packages/patterns/badge:
+    devDependencies:
+      '@types/react':
+        specifier: ^18.2.0
+        version: 18.3.26
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+
   packages/patterns/modal:
     dependencies:
       react-dom:
