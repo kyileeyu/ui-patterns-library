@@ -1,5 +1,5 @@
 import React from "react";
-import { colors } from "../../_shared/colors";
+import { styles } from "../_shared/styles";
 import styled from "@emotion/styled";
 
 interface BadgeProps {
@@ -12,7 +12,7 @@ interface BadgeProps {
 }
 const LabelBadge = styled.span<{ size: "small" | "large" }>`
   display: inline-block;
-  background-color: ${colors.error};
+  background-color: ${styles.colors.error};
   border-radius: 50%;
   width: ${(props) => (props.size === "small" ? "6px" : "12px")};
   height: ${(props) => (props.size === "small" ? "6px" : "12px")};
@@ -23,8 +23,8 @@ const NumberBadge = styled.span<{ size: "small" | "large" }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: ${colors.error};
-  color: ${colors.onError};
+  background-color: ${styles.colors.error};
+  color: ${styles.colors.onError};
   border-radius: ${(props) => (props.size === "small" ? "8px" : "16px")};
   min-width: ${(props) => (props.size === "small" ? "16px" : "24px")};
   height: ${(props) => (props.size === "small" ? "16px" : "24px")};

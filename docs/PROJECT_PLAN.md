@@ -181,6 +181,11 @@ FE 개발자가 실무에서 접하는 모든 UX 패턴을 Native HTML 기반으
 
 ## 📝 코딩 원칙
 
+### 0. 공통 스타일 토큰 사용
+- 색상, border-radius, shadow 등은 `src/patterns/_shared/styles.ts`에서 관리
+- 컴포넌트에서 하드코딩하지 않고 `styles.colors.error`, `styles.radius` 등으로 참조
+- 한 곳에서 값을 바꾸면 모든 컴포넌트에 적용
+
 ### 1. 주석 없이도 이해 가능한 코드
 - 명확한 네이밍
 - 작은 함수로 분리
