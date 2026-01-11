@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@ui-patterns/core": "workspace:*",
-    "@ui-patterns/react": "workspace:*",
+    "@ui-patterns/modal": "workspace:*",
+    "@ui-patterns/badge": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

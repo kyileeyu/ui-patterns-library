@@ -1,0 +1,6 @@
+
+
+interface SwitchProps {
+    checked : boolean;
+    
+}

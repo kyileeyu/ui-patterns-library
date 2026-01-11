@@ -24,20 +24,14 @@ importers:
         specifier: ^4.5.4
         version: 4.5.4(@types/node@20.19.24)(typescript@5.9.3)(vite@5.4.21)
 
-  packages/core:
+  packages/examples:
     dependencies:
+      '@ui-patterns/badge':
+        specifier: workspace:*
+        version: link:../patterns/badge
       '@ui-patterns/modal':
         specifier: workspace:*
         version: link:../patterns/modal
-
-  packages/examples:
-    dependencies:
-      '@ui-patterns/core':
-        specifier: workspace:*
-        version: link:../core
-      '@ui-patterns/react':
-        specifier: workspace:*
-        version: link:../react
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -83,25 +77,6 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.3.1
-
-  packages/react:
-    dependencies:
-      '@ui-patterns/modal':
-        specifier: workspace:*
-        version: link:../patterns/modal
-      react:
-        specifier: ^18.0.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.0.0
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@types/react':
-        specifier: ^18.3.26
-        version: 18.3.26
-      '@types/react-dom':
-        specifier: ^18.3.7
-        version: 18.3.7(@types/react@18.3.26)
 
 packages:
 
