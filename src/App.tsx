@@ -1,59 +1,226 @@
-import { Modal } from "./patterns/modal/core";
-import { useEffect, useRef } from "react";
+import styled from "@emotion/styled";
+import { useState } from "react";
+import { Modal as DeclarativeModal } from "./patterns/modal/react/declarative";
+import { HeadlessExample } from "./patterns/modal/react/headless";
+import { Badge } from "./patterns/badge/react";
 
-function App() {
-  const modalRef = useRef<Modal | null>(null);
-  //왜 useRef를 쓴거지?
-  //useRef는 컴포넌트가 다시 렌더링 되어도 값이 유지되도록 해줘.
-  //모달 인스턴스를 저장하는 데 적합하지.
-  // 값이 유지된다는게 리렌더링이 안되게 해준다는거지? 인스턴스는 클래스라는 뼈대의 한 벌이라는 뜻이고?
-  //맞아, 리렌더링이 되어도 modalRef.current에 저장된 Modal 인스턴스는 그대로 남아있어.
-  // ref는 클래스야? current라는 메소드가 있는거야?
-  //ref는 객체야. current는 그 객체의 속성으로, 우리가 저장한 값을 가리켜.
-  //그래서 modalRef.current를 통해 Modal 인스턴스에 접근할 수 있는 거지.
-  // 이 개념이 헷갈린다면 어떤 키워드를 더 공부해야해?
-  //리액트 훅스와 참조에 대해 더 공부해보는 게 좋아.
-  // 오케
+// 글로벌 스타일 (Modal backdrop/content)
+const GlobalStyles = styled.div`
+  .modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
 
-  const dialogRef = useRef<HTMLDivElement | null>(null);
-  //이건 또 뭐지?
-  //이 ref는 모달의 실제 HTML 요소를 가리키기 위해 사용돼.
-  //모달을 생성할 때 이 요소를 Modal 클래스에 전달할 거야.
-  // 컴포넌트를 리렌더링 안되는 state로 관리하는 느낌인가?
-  //맞아, 이 ref도 리렌더링이 되어도 값이 유지돼서 모달 요소에 계속 접근할 수 있어.
+  .modal-content {
+    background: white;
+    padding: 24px;
+    border-radius: 8px;
+    min-width: 300px;
+    max-width: 500px;
+  }
+`;
 
-  useEffect(() => {
-    if (dialogRef.current) {
-      modalRef.current = new Modal(dialogRef.current);
-      // dialogRef의 current가 없다면, 새로운 모달 인스턴스를 생성해서 그 안에 null을 넣는거야??
-      // 맞아, dialogRef.current가 null이라면, 새로운 Modal 인스턴스를 생성할 때 null을 전달하게 될 거야.
-      //근데 그걸 다시 modalRef.current에 저장하는 이유가 뭐야?
-      //모달 인스턴스를 modalRef.current에 저장해서 나중에 이 인스턴스의 메서드들(open, close 등)을 사용할 수 있도록 하기 위해서야.
-      //아하! 이제 알겠어!
-    }
-  }, []);
+const Container = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+`;
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+`;
+
+const Logo = styled.img`
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+`;
+
+const Title = styled.h1`
+  font-size: 32px;
+  margin: 0;
+  color: #1a1a1a;
+`;
+
+const Section = styled.section`
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid #e0e0e0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 24px;
+  margin-bottom: 24px;
+  color: #333;
+`;
+
+const SubSection = styled.div`
+  margin-bottom: 24px;
+`;
+
+const SubSectionTitle = styled.h3`
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: #666;
+`;
+
+const DemoRow = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+const DemoCard = styled.div`
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #fafafa;
+`;
+
+const Button = styled.button`
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #6200ee;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background: #5000d0;
+  }
+`;
+
+const Label = styled.span`
+  font-size: 14px;
+  color: #666;
+  margin-right: 8px;
+`;
+
+const ComingSoon = styled.div`
+  padding: 24px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  background: #f5f5f5;
+  border-radius: 8px;
+`;
+
+// Modal Declarative Example
+function DeclarativeModalDemo() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div style={{ padding: "40px" }}>
-      <h1>Modal Test v1 - 최소 버전</h1>
+    <DemoCard>
+      <SubSectionTitle>Declarative</SubSectionTitle>
+      <Button onClick={() => setIsOpen(true)}>Open Modal</Button>
+      <DeclarativeModal open={isOpen} onClose={() => setIsOpen(false)}>
+        <h2>Declarative Modal</h2>
+        <p>props로 open/onClose를 전달하는 방식</p>
+      </DeclarativeModal>
+    </DemoCard>
+  );
+}
 
-      <button onClick={() => modalRef.current?.open()}>Open Modal</button>
-      {/* 신기하다! 그니까 ref에 객체를 넣고 객체의 메서드를 실행할 수 도 있구나! */}
-      {/* dialogRef.current를 통해 모달의 HTML 요소에 접근할 수 있겠네! */}
+// Modal Headless Example
+function HeadlessModalDemo() {
+  return (
+    <DemoCard>
+      <SubSectionTitle>Headless (Compound)</SubSectionTitle>
+      <HeadlessExample />
+    </DemoCard>
+  );
+}
 
-      <div ref={dialogRef} className="modal">
-        {/* 이 div의 ref는 무슨역할이야? */}
-        {/* 이 ref를 통해 모달의 HTML 요소에 접근할 수 있어. */}
-        {/* ref라는 속성이 이 div의 DOM 요소를 가리키게 해줘. */}
-        {/* 아 이렇게 등록하는거야? */}
+function App() {
+  return (
+    <GlobalStyles>
+      <Container>
+        <TitleWrapper>
+          <Logo src="/Logo.png" alt="UI Patterns Library Logo" />
+          <Title>UI Patterns Library</Title>
+        </TitleWrapper>
 
-        <div className="modal-content">
-          <h2>Hello Modal!</h2>
-          <p>이것이 가장 단순한 모달입니다.</p>
-          <button onClick={() => modalRef.current?.close()}>Close</button>
-        </div>
-      </div>
-    </div>
+        {/* Modal Section */}
+        <Section>
+          <SectionTitle>Modal</SectionTitle>
+          <DemoRow>
+            <DeclarativeModalDemo />
+            <HeadlessModalDemo />
+          </DemoRow>
+        </Section>
+
+        {/* Badge Section */}
+        <Section>
+          <SectionTitle>Badge</SectionTitle>
+
+          <SubSection>
+            <SubSectionTitle>Label Badge</SubSectionTitle>
+            <DemoRow>
+              <DemoCard>
+                <Label>Small:</Label>
+                <Badge type="LABEL" size="small">
+                  {null}
+                </Badge>
+              </DemoCard>
+              <DemoCard>
+                <Label>Large:</Label>
+                <Badge type="LABEL" size="large">
+                  {null}
+                </Badge>
+              </DemoCard>
+            </DemoRow>
+          </SubSection>
+
+          <SubSection>
+            <SubSectionTitle>Number Badge</SubSectionTitle>
+            <DemoRow>
+              <DemoCard>
+                <Label>Small (3):</Label>
+                <Badge type="NUMBERS" size="small">
+                  {3}
+                </Badge>
+              </DemoCard>
+              <DemoCard>
+                <Label>Large (42):</Label>
+                <Badge type="NUMBERS" size="large">
+                  {42}
+                </Badge>
+              </DemoCard>
+              <DemoCard>
+                <Label>Max (999, max=99):</Label>
+                <Badge type="NUMBERS" size="large" max={99}>
+                  {999}
+                </Badge>
+              </DemoCard>
+            </DemoRow>
+          </SubSection>
+        </Section>
+
+        {/* Switch Section */}
+        <Section>
+          <SectionTitle>Switch</SectionTitle>
+          <ComingSoon>Coming Soon...</ComingSoon>
+        </Section>
+      </Container>
+    </GlobalStyles>
   );
 }
 
