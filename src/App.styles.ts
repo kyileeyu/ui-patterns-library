@@ -25,6 +25,125 @@ export const GlobalStyles = styled.div`
   }
 `;
 
+// 2컬럼 레이아웃
+export const AppLayout = styled.div`
+  display: flex;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+`;
+
+export const Sidebar = styled.aside`
+  width: 240px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: ${styles.colors.surface};
+  border-right: 1px solid ${styles.colors.outlineVariant};
+  padding: 24px 0;
+`;
+
+export const SidebarHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 20px 24px;
+  border-bottom: 1px solid ${styles.colors.outlineVariant};
+  margin-bottom: 16px;
+`;
+
+export const SidebarLogo = styled.img`
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+`;
+
+export const SidebarTitle = styled.h1`
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: ${styles.colors.onSurface};
+`;
+
+export const SidebarNav = styled.nav`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 12px;
+`;
+
+export const SidebarItem = styled.button<{ $active?: boolean }>`
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: ${(props) => (props.$active ? styles.colors.primaryContainer : "transparent")};
+  color: ${(props) => (props.$active ? styles.colors.onPrimaryContainer : styles.colors.onSurfaceVariant)};
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: ${(props) => (props.$active ? styles.colors.primaryContainer : styles.colors.surfaceVariant)};
+  }
+`;
+
+export const MainContent = styled.main`
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StickyHeader = styled.header`
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: white;
+  border-bottom: 1px solid ${styles.colors.outlineVariant};
+  padding: 16px 32px;
+`;
+
+export const StickyHeaderTitle = styled.h2`
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  color: ${styles.colors.onSurface};
+`;
+
+export const PillTabList = styled.div`
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+`;
+
+export const PillTab = styled.button<{ $active?: boolean }>`
+  padding: 6px 16px;
+  border: none;
+  border-radius: 9999px;
+  background: ${(props) => (props.$active ? styles.colors.primary : styles.colors.surfaceVariant)};
+  color: ${(props) => (props.$active ? styles.colors.onPrimary : styles.colors.onSurfaceVariant)};
+  font-size: 13px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: ${(props) => (props.$active ? styles.colors.primary : styles.colors.outline)};
+    color: ${(props) => (props.$active ? styles.colors.onPrimary : "white")};
+  }
+`;
+
+export const ContentArea = styled.div`
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+`;
+
+// 기존 Container (deprecated, 호환용)
 export const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;

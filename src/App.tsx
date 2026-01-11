@@ -4,10 +4,19 @@ import { HeadlessExample } from "./patterns/modal/Modal.headless";
 import { Badge } from "./patterns/badge/Badge";
 import {
   GlobalStyles,
-  Container,
-  TitleWrapper,
-  Logo,
-  Title,
+  AppLayout,
+  Sidebar,
+  SidebarHeader,
+  SidebarLogo,
+  SidebarTitle,
+  SidebarNav,
+  SidebarItem,
+  MainContent,
+  StickyHeader,
+  StickyHeaderTitle,
+  PillTabList,
+  PillTab,
+  ContentArea,
   GroupSection,
   GroupTitle,
   GroupDescription,
@@ -82,11 +91,13 @@ function BadgeDemo() {
 
 // 패턴 타입 정의
 interface Pattern {
+  id: string;
   name: string;
   demo?: ReactNode;
 }
 
 interface PatternGroup {
+  id: string;
   title: string;
   description: string;
   patterns: Pattern[];
@@ -95,137 +106,199 @@ interface PatternGroup {
 // 그룹 데이터
 const PATTERN_GROUPS: PatternGroup[] = [
   {
+    id: "group-1",
     title: "Group 1: 오버레이 & 다이얼로그",
     description: "포커스 트랩, z-index, 접근성 등 가장 복잡한 패턴들",
     patterns: [
-      { name: "Modal / Dialog", demo: <ModalDemo /> },
-      { name: "Alert Dialog" },
-      { name: "Drawer / Sheet" },
-      { name: "Bottom Sheet" },
-      { name: "Popover" },
-      { name: "Tooltip" },
+      { id: "modal", name: "Modal / Dialog", demo: <ModalDemo /> },
+      { id: "alert-dialog", name: "Alert Dialog" },
+      { id: "drawer", name: "Drawer / Sheet" },
+      { id: "bottom-sheet", name: "Bottom Sheet" },
+      { id: "popover", name: "Popover" },
+      { id: "tooltip", name: "Tooltip" },
     ],
   },
   {
+    id: "group-2",
     title: "Group 2: 폼 입력 & 선택",
     description: "실무에서 가장 많이 사용하는 기본 인터랙션",
     patterns: [
-      { name: "Radio Button / Group" },
-      { name: "Checkbox" },
-      { name: "Switch / Toggle" },
-      { name: "Select / Dropdown" },
-      { name: "Combobox" },
-      { name: "Autocomplete" },
-      { name: "Menu / Context Menu" },
-      { name: "Text Field / Input" },
-      { name: "Textarea" },
-      { name: "Date & Time Picker" },
-      { name: "Spinbutton" },
-      { name: "Slider" },
-      { name: "Multi-thumb Slider" },
+      { id: "radio", name: "Radio Button / Group" },
+      { id: "checkbox", name: "Checkbox" },
+      { id: "switch", name: "Switch / Toggle" },
+      { id: "select", name: "Select / Dropdown" },
+      { id: "combobox", name: "Combobox" },
+      { id: "autocomplete", name: "Autocomplete" },
+      { id: "menu", name: "Menu / Context Menu" },
+      { id: "textfield", name: "Text Field / Input" },
+      { id: "textarea", name: "Textarea" },
+      { id: "datepicker", name: "Date & Time Picker" },
+      { id: "spinbutton", name: "Spinbutton" },
+      { id: "slider", name: "Slider" },
+      { id: "multi-slider", name: "Multi-thumb Slider" },
     ],
   },
   {
+    id: "group-3",
     title: "Group 3: 피드백 & 알림",
     description: "사용자에게 상태를 전달하는 패턴들",
     patterns: [
-      { name: "Toast / Snackbar" },
-      { name: "Alert / Notification" },
-      { name: "Badge", demo: <BadgeDemo /> },
-      { name: "Progress Bar" },
-      { name: "Circular Progress / Spinner" },
-      { name: "Skeleton" },
-      { name: "Meter" },
+      { id: "toast", name: "Toast / Snackbar" },
+      { id: "alert", name: "Alert / Notification" },
+      { id: "badge", name: "Badge", demo: <BadgeDemo /> },
+      { id: "progress", name: "Progress Bar" },
+      { id: "spinner", name: "Circular Progress / Spinner" },
+      { id: "skeleton", name: "Skeleton" },
+      { id: "meter", name: "Meter" },
     ],
   },
   {
+    id: "group-4",
     title: "Group 4: 네비게이션 & 레이아웃",
     description: "정보 구조와 이동",
     patterns: [
-      { name: "Tabs" },
-      { name: "Accordion" },
-      { name: "Disclosure" },
-      { name: "Breadcrumb" },
-      { name: "Pagination" },
-      { name: "App Bar (Top / Bottom)" },
-      { name: "Navigation Drawer" },
-      { name: "Navigation Rail" },
-      { name: "Toolbar" },
-      { name: "Menu Button" },
-      { name: "Divider" },
-      { name: "Window Splitter" },
-      { name: "Card" },
+      { id: "tabs", name: "Tabs" },
+      { id: "accordion", name: "Accordion" },
+      { id: "disclosure", name: "Disclosure" },
+      { id: "breadcrumb", name: "Breadcrumb" },
+      { id: "pagination", name: "Pagination" },
+      { id: "appbar", name: "App Bar (Top / Bottom)" },
+      { id: "nav-drawer", name: "Navigation Drawer" },
+      { id: "nav-rail", name: "Navigation Rail" },
+      { id: "toolbar", name: "Toolbar" },
+      { id: "menu-button", name: "Menu Button" },
+      { id: "divider", name: "Divider" },
+      { id: "splitter", name: "Window Splitter" },
+      { id: "card", name: "Card" },
     ],
   },
   {
+    id: "group-5",
     title: "Group 5: 복잡한 데이터 표시",
     description: "고급 인터랙션",
     patterns: [
-      { name: "List" },
-      { name: "Table" },
-      { name: "Grid (Interactive)" },
-      { name: "Treegrid" },
-      { name: "Tree View" },
-      { name: "Feed" },
-      { name: "Infinite Scroll" },
-      { name: "Carousel" },
-      { name: "Virtualized List" },
+      { id: "list", name: "List" },
+      { id: "table", name: "Table" },
+      { id: "grid", name: "Grid (Interactive)" },
+      { id: "treegrid", name: "Treegrid" },
+      { id: "treeview", name: "Tree View" },
+      { id: "feed", name: "Feed" },
+      { id: "infinite-scroll", name: "Infinite Scroll" },
+      { id: "carousel", name: "Carousel" },
+      { id: "virtual-list", name: "Virtualized List" },
     ],
   },
   {
+    id: "group-6",
     title: "Group 6: 고급 인터랙션",
     description: "선택적 구현",
     patterns: [
-      { name: "Drag & Drop" },
-      { name: "Sortable List" },
-      { name: "Resizable" },
-      { name: "File Upload" },
-      { name: "Search" },
-      { name: "Chips" },
-      { name: "Color Picker" },
-      { name: "Rich Text Editor" },
+      { id: "dnd", name: "Drag & Drop" },
+      { id: "sortable", name: "Sortable List" },
+      { id: "resizable", name: "Resizable" },
+      { id: "file-upload", name: "File Upload" },
+      { id: "search", name: "Search" },
+      { id: "chips", name: "Chips" },
+      { id: "color-picker", name: "Color Picker" },
+      { id: "rich-text", name: "Rich Text Editor" },
     ],
   },
   {
+    id: "group-7",
     title: "Group 7: 기본 빌딩 블록",
     description: "다른 패턴의 기초가 되는 것들",
     patterns: [
-      { name: "Button" },
-      { name: "Link" },
-      { name: "Icon Button" },
-      { name: "Floating Action Button (FAB)" },
-      { name: "Landmarks" },
+      { id: "button", name: "Button" },
+      { id: "link", name: "Link" },
+      { id: "icon-button", name: "Icon Button" },
+      { id: "fab", name: "Floating Action Button (FAB)" },
+      { id: "landmarks", name: "Landmarks" },
     ],
   },
 ];
 
+// 데모가 있는 그룹/패턴만 필터링
+const visibleGroups = PATTERN_GROUPS.filter((group) =>
+  group.patterns.some((pattern) => pattern.demo)
+);
+
 function App() {
+  const [activeGroupId, setActiveGroupId] = useState(visibleGroups[0]?.id);
+
+  const currentGroup = visibleGroups.find((g) => g.id === activeGroupId);
+  const currentPatterns = currentGroup?.patterns.filter((p) => p.demo) ?? [];
+
+  const scrollToGroup = (groupId: string) => {
+    setActiveGroupId(groupId);
+    const element = document.getElementById(groupId);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const scrollToPattern = (patternId: string) => {
+    const element = document.getElementById(patternId);
+    element?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <GlobalStyles>
-      <Container>
-        <TitleWrapper>
-          <Logo src="/Logo.png" alt="UI Patterns Library Logo" />
-          <Title>UI Patterns Library</Title>
-        </TitleWrapper>
+      <AppLayout>
+        {/* 사이드바 */}
+        <Sidebar>
+          <SidebarHeader>
+            <SidebarLogo src="/Logo.png" alt="Logo" />
+            <SidebarTitle>UI Patterns</SidebarTitle>
+          </SidebarHeader>
+          <SidebarNav>
+            {visibleGroups.map((group) => (
+              <SidebarItem
+                key={group.id}
+                $active={activeGroupId === group.id}
+                onClick={() => scrollToGroup(group.id)}
+              >
+                {group.title.replace("Group ", "").replace(":", " -")}
+              </SidebarItem>
+            ))}
+          </SidebarNav>
+        </Sidebar>
 
-        {PATTERN_GROUPS.filter((group) =>
-          group.patterns.some((pattern) => pattern.demo)
-        ).map((group) => (
-          <GroupSection key={group.title}>
-            <GroupTitle>{group.title}</GroupTitle>
-            <GroupDescription>{group.description}</GroupDescription>
-
-            {group.patterns
-              .filter((pattern) => pattern.demo)
-              .map((pattern) => (
-                <PatternSection key={pattern.name}>
-                  <PatternTitle>{pattern.name}</PatternTitle>
-                  {pattern.demo}
-                </PatternSection>
+        {/* 메인 콘텐츠 */}
+        <MainContent>
+          {/* Sticky 헤더 */}
+          <StickyHeader>
+            <StickyHeaderTitle>{currentGroup?.title}</StickyHeaderTitle>
+            <PillTabList>
+              {currentPatterns.map((pattern) => (
+                <PillTab
+                  key={pattern.id}
+                  $active={false}
+                  onClick={() => scrollToPattern(pattern.id)}
+                >
+                  {pattern.name}
+                </PillTab>
               ))}
-          </GroupSection>
-        ))}
-      </Container>
+            </PillTabList>
+          </StickyHeader>
+
+          {/* 콘텐츠 영역 */}
+          <ContentArea>
+            {visibleGroups.map((group) => (
+              <GroupSection key={group.id} id={group.id}>
+                <GroupTitle>{group.title}</GroupTitle>
+                <GroupDescription>{group.description}</GroupDescription>
+
+                {group.patterns
+                  .filter((pattern) => pattern.demo)
+                  .map((pattern) => (
+                    <PatternSection key={pattern.id} id={pattern.id}>
+                      <PatternTitle>{pattern.name}</PatternTitle>
+                      {pattern.demo}
+                    </PatternSection>
+                  ))}
+              </GroupSection>
+            ))}
+          </ContentArea>
+        </MainContent>
+      </AppLayout>
     </GlobalStyles>
   );
 }
