@@ -28,7 +28,7 @@ FE 개발자가 실무에서 접하는 모든 UX 패턴을 Native HTML 기반으
 ### 🔥 Priority Group 1: 핵심 오버레이 & 다이얼로그 (가장 높은 우선순위)
 **멘토님 강조: 모달을 중심으로 한 오버레이 패턴부터**
 
-- [ ] **Modal/Dialog** - Promise 기반 Hook API, 포커스 트랩, ESC 닫기
+- [x] **Modal/Dialog** - Promise 기반 Hook API, 포커스 트랩, ESC 닫기
 - [ ] **Alert Dialog** - 확인/취소 전용 모달 (confirm/alert 대체)
 - [ ] **Drawer/Sheet** - 측면/하단 슬라이드 패널
 - [ ] **Bottom Sheet** - 모바일 하단 시트
@@ -48,7 +48,7 @@ FE 개발자가 실무에서 접하는 모든 UX 패턴을 Native HTML 기반으
 #### 2-1. 선택 컨트롤
 - [ ] **Radio Button/Group** - 단일 선택 (접근성 중요)
 - [ ] **Checkbox** - 다중 선택, indeterminate 상태
-- [ ] **Switch/Toggle** - on/off 토글
+- [ ] **Switch/Toggle** - on/off 토글 (작업 중)
 
 #### 2-2. 드롭다운 계열
 - [ ] **Select/Dropdown** - 네이티브 select 대체
@@ -76,7 +76,7 @@ FE 개발자가 실무에서 접하는 모든 UX 패턴을 Native HTML 기반으
 
 - [ ] **Toast/Snackbar** - 일시적 알림 (자동 사라짐)
 - [ ] **Alert/Notification** - 중요 알림 (배너형)
-- [ ] **Badge** - 숫자/상태 뱃지
+- [x] **Badge** - 숫자/상태 뱃지
 - [ ] **Progress Bar** - 진행률 표시
 - [ ] **Circular Progress/Spinner** - 로딩 인디케이터
 - [ ] **Skeleton** - 로딩 플레이스홀더
