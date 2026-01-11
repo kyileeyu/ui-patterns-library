@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { Modal as DeclarativeModal } from "./patterns/modal/react/declarative";
-import { HeadlessExample } from "./patterns/modal/react/headless";
-import { Badge } from "./patterns/badge/react";
+import { Modal as DeclarativeModal } from "./patterns/modal/Modal.declarative";
+import { HeadlessExample } from "./patterns/modal/Modal.headless";
+import { Badge } from "./patterns/badge/Badge";
 
 // 글로벌 스타일 (Modal backdrop/content)
 const GlobalStyles = styled.div`
